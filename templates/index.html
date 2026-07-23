@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AI Phishing Detector</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+<div class="result {{ color }}">
+
+<h1>🛡 AI Phishing Email Detector</h1>
+
+<p class="subtitle">
+Detect phishing emails using AI, NLP & Machine Learning
+</p>
+
+<form action="/predict" method="POST">
+
+<textarea
+name="email"
+rows="12"
+cols="70"
+placeholder="Paste your email here..."></textarea>
+
+<br><br>
+
+<button type="submit">
+
+Analyze Email
+
+</button>
+
+</form>
+
+{% if prediction %}
+<hr>
+
+
+<h2>Risk Level: {{ risk }}</h2>
+
+<h2>Prediction: {{ prediction }}</h2>
+
+<h3>Confidence : {{ confidence }}%</h3>
+
+<div class="progress">
+    <div class="progress-fill" style="width: {{ confidence|default(0) }}%;">
+
+    </div>
+</div>
+
+<h3>Threat Score : {{ threat_score }}/100</h3>
+
+<div class="progress">
+    <div class="progress-fill danger" style="width: {{ threat_score|default(0) }}%;">
+        
+    </div>
+</div>
+
+<h3>Reasons:</h3>
+
+<ul>
+    {% for reason in reasons %}
+    <li>{{ reason }}</li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>
